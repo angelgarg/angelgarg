@@ -1,5 +1,5 @@
 ### 👋 Hi, I'm Angel Garg
-I'm a 2nd year Electronics Engineer specializing in **Analog IC Design**, currently building a 12-bit SAR ADC and working on **comparator offset calibration using neural networks**.
+I'm a 3rd year Electronics Engineer specializing in **Analog IC Design**, currently building a 12-bit SAR ADC and working on **comparator offset calibration using neural networks**.
 
 🔬 Current Interests:
 - Analog and Mixed-Signal Circuit Design
