@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,100:1f6feb&height=170&section=header&text=Angel%20Garg&fontColor=e6edf3&fontSize=48&fontAlignY=38&desc=Analog%20%26%20Mixed-Signal%20IC%20Design&descAlignY=60&animation=fadeIn" width="100%" alt="Angel Garg"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,100:1f6feb&height=170&section=header&text=Angel%20Garg&fontColor=e6edf3&fontSize=48&fontAlignY=38&desc=Analog%20and%20Mixed-Signal%20IC%20Design&descAlignY=60&animation=fadeIn" width="100%" alt="Angel Garg"/>
 
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=2800&pause=900&color=58A6FF&center=true&vCenter=true&width=620&lines=8-bit+SAR+ADC+%E2%80%A2+layout+DRC%2FLVS+clean;Integer-N+CP-PLL+%E2%80%A2+20%E2%80%9350+MHz;Neurons+on+chip+for+ADC+calibration;Spec+%E2%86%92+transistors+%E2%86%92+layout+%E2%86%92+sign-off" alt="Typing intro"/>
@@ -27,6 +27,40 @@ I also like using ML to fix analog errors.
 | **ADC + PLL combo** | Both blocks on one 5×5 mm die, PLL clocks the ADC | DRC 0 / LVS match / antenna 0 |
 | **NeuroCal** | All-digital "neurons on chip" calibration engine for the ADC + PLL | 7.59 → 7.77 ENOB, SFDR 57 → 70 dB (sim), RTL bit-exact with the C model |
 | **PRESENT-80 crypto chip** | SPI-controlled lightweight block cipher, gate-level and transistor-level verification | Spectre full-chip sim PASS, ~10 mW at 5 V |
+
+#### Chip layouts
+
+All three are my own full-chip layouts in SCL 1.2 µm (2 metal layers), DRC 0 / LVS match. Click an image to zoom in.
+
+<table>
+  <tr>
+    <td align="center" width="33%"><a href="assets/adc_layout_4x4.png"><img src="assets/adc_layout_4x4.png" alt="SAR ADC Rev3.2 full-chip layout, 4 x 4 mm, with pads and blocks labelled"/></a><br/><b>SAR ADC</b> · 4 × 4 mm</td>
+    <td align="center" width="33%"><a href="assets/pll_layout_2x2.png"><img src="assets/pll_layout_2x2.png" alt="CP-PLL full-chip layout, 2 x 2 mm: VCO, charge pump, PFD, divider, lock detector"/></a><br/><b>CP-PLL</b> · 2 × 2 mm</td>
+    <td align="center" width="33%"><a href="assets/combo_layout_5x5.png"><img src="assets/combo_layout_5x5.png" alt="ADC + PLL combo chip layout, 5 x 5 mm, PLL in a guard ring in the top-right corner"/></a><br/><b>ADC + PLL</b> · 5 × 5 mm</td>
+  </tr>
+</table>
+
+#### Architectures
+
+<p align="center"><img src="assets/sar_adc_arch.svg" width="100%" alt="SAR ADC block diagram: external S/H, kickback match, dual StrongARM comparator, SAR logic, DAC drivers, R-2R DAC, control FSM, parallel and SPI outputs"/></p>
+<p align="center"><img src="assets/cp_pll_arch.svg" width="100%" alt="CP-PLL block diagram: PFD, charge pump, off-chip loop filter, starved ring VCO, output driver, divide-by-N feedback, lock detector"/></p>
+
+#### Results (post-layout simulation)
+
+<details>
+<summary><b>SAR ADC: transfer curve, DNL and INL across PVT corners</b> (|DNL| &lt; 0.3 LSB, |INL| ≲ 0.55 LSB)</summary>
+<br/><img src="assets/adc_vtc_dnl_inl.png" width="80%" alt="Post-layout SAR ADC transfer curve, DNL and INL at five PVT corners"/>
+</details>
+
+<details>
+<summary><b>CP-PLL: phase noise at 40 MHz</b> (17.5 ps rms jitter nominal, 26.4 ps worst corner)</summary>
+<br/><img src="assets/pll_phase_noise.png" width="100%" alt="PLL phase noise with VCO, charge pump and R1 contributions at two corners"/>
+</details>
+
+<details>
+<summary><b>ADC + PLL: PLL locks the same with the ADC converting next to it</b></summary>
+<br/><img src="assets/combo_pll_lock.png" width="90%" alt="PLL phase error and VCTRL with the ADC in reset versus converting; curves overlap"/>
+</details>
 
 #### Projects you can open
 
